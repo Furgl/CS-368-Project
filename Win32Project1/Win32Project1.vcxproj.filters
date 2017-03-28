@@ -13,10 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\buttons">
+      <UniqueIdentifier>{3eec4b8e-ada2-4c85-b7cf-655337dbc82f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\buttons">
+      <UniqueIdentifier>{fc9bc153-b0c9-4d7a-8a57-31208691f858}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SFML Test.cpp">
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonExit.cpp">
+      <Filter>Source Files\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonPlay.cpp">
+      <Filter>Source Files\buttons</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonPlay.h">
+      <Filter>Header Files\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonExit.h">
+      <Filter>Header Files\buttons</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
