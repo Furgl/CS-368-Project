@@ -5,9 +5,6 @@ Button::Button(sf::RenderWindow& window, std::string text, sf::Font& font,
 : window(window), text(text, font), rectangle() {
 	this->text.setCharacterSize(textSize);
 	this->text.setPosition(x, y);
-
-	this->outlineSize = outlineSize;
-	this->mouseOver = false;
 	this->text.setFillColor(sf::Color(20, 20, 30));
 
 	// button background
@@ -22,12 +19,10 @@ Button::Button(sf::RenderWindow& window, std::string text, sf::Font& font,
 
 bool Button::isMouseOver(int x, int y) {
 	bool mouseOver = rectangle.getGlobalBounds().contains(x, y);
-	if (mouseOver == true) {
+	if (mouseOver == true) 
 		text.setFillColor(sf::Color(0, 100, 250));
-	}
-	else {
+	else 
 		text.setFillColor(sf::Color(20, 20, 30));
-	}
 
 	return mouseOver;
 }

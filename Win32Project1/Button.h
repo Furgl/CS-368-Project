@@ -9,8 +9,6 @@ protected:
 	sf::RenderWindow& window;
 	sf::Text text;
 	sf::RectangleShape rectangle;
-	bool mouseOver;
-	int outlineSize;
 
 public:
 	Button(sf::RenderWindow & window, std::string text, sf::Font & font, int x, int y, int textSize, int outlineSize);

@@ -8,10 +8,6 @@
 
 using namespace std;
 
-// TODO move title screen code into ScreenTitle class
-// TODO replace ButtonExit and ButtonPlay with a Button that
-//      accepts an onClick function in its constructor?
-
 int WinMain() {
 	// set anti aliasing
 	sf::ContextSettings settings;
@@ -59,7 +55,7 @@ int WinMain() {
 		// clear the window with black color
 		window.clear(sf::Color::Black);
 
-		// fade background, just for fun
+		// fade background just for fun
 		counter += 0.0002;
 		sf::Uint8 fade = abs(cos(counter) * 80) + 130;
 		background.setColor(sf::Color(fade, fade, fade));
