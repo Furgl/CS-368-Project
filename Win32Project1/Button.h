@@ -20,7 +20,7 @@ public:
 	virtual void draw();
 
 	// Called when isMouseOver is true and the mouse is clicked
-	virtual void onClick();
+	virtual int onClick();
 
 };
 

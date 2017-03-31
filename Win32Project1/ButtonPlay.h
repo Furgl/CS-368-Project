@@ -12,7 +12,7 @@ public:
 	ButtonPlay(sf::RenderWindow & window, sf::Font & font, int x, int y);
 
 	// Called when isMouseOver is true and the mouse is clicked
-	void onClick() override;
+	int onClick() override;
 };
 
 #endif

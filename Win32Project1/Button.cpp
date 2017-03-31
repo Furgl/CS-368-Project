@@ -32,4 +32,6 @@ void Button::draw() {
 	window.draw(text);
 }
 
-void Button::onClick() {}
+int Button::onClick() {
+	return 0;
+}

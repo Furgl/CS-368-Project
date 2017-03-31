@@ -1,44 +1,12 @@
-#include "main.h"
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <math.h> 
-#include <time.h>
+#include "mainScreen.h"
+#include "cScreen.h"
+#include "SFML\Graphics.hpp"
+#include "Button.h"
 #include "ButtonExit.h"
 #include "ButtonPlay.h"
-#include "screens.h"
 
-
-using namespace std;
-
-// TODO move title screen code into ScreenTitle class
-// TODO replace ButtonExit and ButtonPlay with a Button that
-//      accepts an onClick function in its constructor?
-int WinMain() {
-	// set anti aliasing
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
-
-	// create window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Tower Defense", sf::Style::Close, settings);
-
-	std::vector<cScreen*> Screens;
-	int screen = 0;
-
-	mainScreen s1;
-	Screens.push_back(&s1);
-	configScreen s2;
-	Screens.push_back(&s2);
-
-	while (screen >= 0)
-	{
-		screen = Screens[screen]->Run(window);
-	}
-
-
-	//Kept everything commented out below in case it doesn't work
-
-	/*
-	// create title screen background
+int mainScreen::Run(sf::RenderWindow &window)
+{
 	sf::Texture texture;
 	if (!texture.loadFromFile("textures/title_background.jpg"))
 		window.close(); // error
@@ -49,17 +17,17 @@ int WinMain() {
 
 	// load font
 	sf::Font font;
-	if (!font.loadFromFile("fonts/airstrike.ttf")) 
+	if (!font.loadFromFile("fonts/airstrike.ttf"))
 		window.close(); // error
 
-	// create title text
+						// create title text
 	sf::Text title;
 	title.setFont(font);
 	title.setString("Tower Defense");
 	title.setCharacterSize(70);
 	title.setFillColor(sf::Color::Blue);
 	title.setStyle(sf::Text::Bold | sf::Text::Underlined);
-	title.setPosition(sf::Vector2f(window.getSize().x/2 - title.getLocalBounds().width/2, 150));
+	title.setPosition(sf::Vector2f(window.getSize().x / 2 - title.getLocalBounds().width / 2, 150));
 	title.setOutlineThickness(3);
 	title.setOutlineColor(sf::Color(40, 100, 200));
 
@@ -72,7 +40,7 @@ int WinMain() {
 	double counter = 0;
 
 	// run program as long as window is open
-	while (window.isOpen()) {
+	while (true) {
 
 		// clear the window with black color
 		window.clear(sf::Color::Black);
@@ -88,16 +56,16 @@ int WinMain() {
 
 			// mouse moved - update buttons
 			if (event.type == sf::Event::MouseMoved) {
-				for (Button* button : buttons) 
+				for (Button* button : buttons)
 					button->isMouseOver(event.mouseMove.x, event.mouseMove.y);
 			}
 
 			// mouse click - update buttons
 			else if (event.type == sf::Event::MouseButtonPressed &&
 				event.mouseButton.button == sf::Mouse::Left) {
-				for (Button* button : buttons) 
-					if (button->isMouseOver(event.mouseButton.x, event.mouseButton.y)) 
-						button->onClick();
+				for (Button* button : buttons)
+					if (button->isMouseOver(event.mouseButton.x, event.mouseButton.y))
+						return button->onClick();
 			}
 
 			// close window when requested
@@ -109,14 +77,12 @@ int WinMain() {
 		// draw everything here
 		window.draw(background);
 		window.draw(title);
-		for (Button* button : buttons) 
+		for (Button* button : buttons)
 			button->draw();
 
 		// end current frame
 		window.display();
 	}
 
-	*/
-
-	return EXIT_SUCCESS;
+	return -1;
 }
