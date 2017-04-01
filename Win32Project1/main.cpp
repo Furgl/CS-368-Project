@@ -26,7 +26,7 @@ int WinMain() {
 
 	mainScreen s1;
 	Screens.push_back(&s1);
-	configScreen s2;
+	gameScreen s2;
 	Screens.push_back(&s2);
 
 	while (screen >= 0)

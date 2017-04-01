@@ -5,7 +5,7 @@
 #include "cScreen.h"
 
 #include "mainScreen.h"
-#include "configScreen.h"
+#include "gameScreen.h"
 
 #endif
 

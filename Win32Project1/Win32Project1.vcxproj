@@ -149,7 +149,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonExit.cpp" />
     <ClCompile Include="ButtonPlay.cpp" />
-    <ClCompile Include="configScreen.cpp" />
+    <ClCompile Include="gameScreen.cpp" />
     <ClCompile Include="cScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainScreen.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonExit.h" />
     <ClInclude Include="ButtonPlay.h" />
-    <ClInclude Include="configScreen.h" />
+    <ClInclude Include="gameScreen.h" />
     <ClInclude Include="cScreen.h" />
     <ClInclude Include="mainScreen.h" />
     <ClInclude Include="screens.h" />
