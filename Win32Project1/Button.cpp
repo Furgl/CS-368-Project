@@ -17,6 +17,12 @@ Button::Button(sf::RenderWindow& window, std::string text, sf::Font& font,
 	rectangle.setOutlineColor(sf::Color(20, 20, 40));
 }
 
+Button::Button(sf::RenderWindow & window, std::string text, sf::Font & font, 
+	int x, int y, int textSize, int outlineSize, void(*onClick)(sf::RenderWindow & window))
+: Button(window, text, font, x, y, textSize, outlineSize) {
+	this->clickFunc = onClick;
+}
+
 bool Button::isMouseOver(int x, int y) {
 	bool mouseOver = rectangle.getGlobalBounds().contains(x, y);
 	if (mouseOver == true) 
@@ -32,6 +38,7 @@ void Button::draw() {
 	window.draw(text);
 }
 
-int Button::onClick() {
-	return 0;
+void Button::onClick() {
+	clickFunc(window);
+	isMouseOver(-1, -1); // (to stop highlighting)
 }

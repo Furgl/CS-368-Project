@@ -147,22 +147,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ButtonExit.cpp" />
-    <ClCompile Include="ButtonPlay.cpp" />
-    <ClCompile Include="gameScreen.cpp" />
-    <ClCompile Include="cScreen.cpp" />
+    <ClCompile Include="ScreenGame.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainScreen.cpp" />
-    <ClCompile Include="screens.cpp" />
+    <ClCompile Include="ScreenTitle.cpp" />
+    <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
-    <ClInclude Include="ButtonExit.h" />
-    <ClInclude Include="ButtonPlay.h" />
-    <ClInclude Include="gameScreen.h" />
-    <ClInclude Include="cScreen.h" />
-    <ClInclude Include="mainScreen.h" />
-    <ClInclude Include="screens.h" />
+    <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="ScreenGame.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="ScreenTitle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

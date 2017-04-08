@@ -19,6 +19,24 @@
     <Filter Include="Header Files\buttons">
       <UniqueIdentifier>{fc9bc153-b0c9-4d7a-8a57-31208691f858}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\screens">
+      <UniqueIdentifier>{8bb26513-9874-4fd3-93a0-ca07fd648e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\screens">
+      <UniqueIdentifier>{cd400b36-667d-4078-a75c-e8925187ebcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tiles">
+      <UniqueIdentifier>{2a75dd8f-50c4-4c60-9f14-483ab5847f57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tiles">
+      <UniqueIdentifier>{ee870519-e1c2-46b9-9722-80c41567a48f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\stages">
+      <UniqueIdentifier>{f98dc27f-cba4-49da-a801-ee512ac1a98f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\stages">
+      <UniqueIdentifier>{557c2a6b-d0aa-4d6e-bf58-3646307d9510}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp">
@@ -27,46 +45,43 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonExit.cpp">
-      <Filter>Source Files\buttons</Filter>
+    <ClCompile Include="ScreenGame.cpp">
+      <Filter>Source Files\screens</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonPlay.cpp">
-      <Filter>Source Files\buttons</Filter>
+    <ClCompile Include="ScreenTitle.cpp">
+      <Filter>Source Files\screens</Filter>
     </ClCompile>
-    <ClCompile Include="cScreen.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\tiles</Filter>
     </ClCompile>
-    <ClCompile Include="screens.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainScreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameScreen.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>Source Files\stages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h">
       <Filter>Header Files\buttons</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonPlay.h">
-      <Filter>Header Files\buttons</Filter>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\screens</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonExit.h">
-      <Filter>Header Files\buttons</Filter>
+    <ClInclude Include="ScreenGame.h">
+      <Filter>Header Files\screens</Filter>
     </ClInclude>
-    <ClInclude Include="cScreen.h">
+    <ClInclude Include="ScreenTitle.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="screens.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\tiles</Filter>
     </ClInclude>
-    <ClInclude Include="mainScreen.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Stage.h">
+      <Filter>Header Files\stages</Filter>
     </ClInclude>
-    <ClInclude Include="gameScreen.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Stage1.h">
+      <Filter>Header Files\stages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

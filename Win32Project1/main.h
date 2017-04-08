@@ -1,17 +1,15 @@
-#ifndef MAIN_HPP
-#define MAIN_HPP
+#pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Screen.h"
 
 class main {
 
 public:
-	static sf::Font font;
-	static sf::RenderWindow* window;
 
-private:
-
+	// 0 is title, 1 is game
+	static int currentScreen;
+	static std::vector<Screen*> screens;
+	static double counter;
 
 };
-
-#endif
