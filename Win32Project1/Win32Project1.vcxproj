@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="ScreenGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ScreenTitle.cpp" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Tile.h" />

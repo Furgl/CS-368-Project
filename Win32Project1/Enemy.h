@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "Tile.h"
+#include "HealthBar.h"
 #include <cassert>
 #include <memory>
 #include <algorithm>
@@ -18,7 +19,9 @@ private:
 	sf::Vector2f nextPos;
 	sf::Vector2f finalPos;
 	int speed;
-	int health;
+	double health;
+	HealthBar healthBar = HealthBar(window, sprite.getPosition().x, sprite.getPosition().y);
+
 
 public:
 
@@ -29,11 +32,16 @@ public:
 	// how much money the player is given for killing this
 	int value;
 
+	//Not exactly sure how we wanna do hit mechanics but for now if hit set this flag to true to update health;
+	bool wasHit;
+
+
 	Enemy(sf::RenderWindow& window, std::vector<std::vector<int>>& map,
 		sf::Vector2f startPos, int type)	
 		: window(window), map(map) {
 		isDead = false;
 		reachedEnd = false;
+		wasHit = false;
 		sprite.setScale(sf::Vector2f(Tile::SIZE / 64.0f, Tile::SIZE / 64.0f));
 		sf::Vector2f pos = getDrawingPos(startPos);
 		sprite.setPosition(pos);
@@ -84,8 +92,35 @@ public:
 				sprite.setRotation(90);  // down
 		}
 
+		//update healthBar pos with that of sprite
+		healthBar.setPos(sprite.getPosition().x, sprite.getPosition().y);
+		
+
+		//SIMPLY HERE TO TEST IF THE HIT FUNCTION IN HEALTH BAR IS WORKING
+		//Press and hold Spacebar to see health decrease
+			sf::Event event;
+			int dead = 0;
+
+			while (window.pollEvent(event)) {
+
+				if (event.type == sf::Event::KeyPressed) {
+
+					if (event.key.code == sf::Keyboard::Space) {
+						dead = healthBar.hit(1, health);
+						health -= 1;
+					}
+					if (dead == 1)
+						isDead = true;
+				}
+			}
+		
+
 		window.draw(sprite);
+		if (dead != 1)
+			healthBar.draw();
 	}
+
+
 
 	// get actual position on screen from a game tile's row and col
 	static sf::Vector2f getDrawingPos(sf::Vector2f boardPos) {
