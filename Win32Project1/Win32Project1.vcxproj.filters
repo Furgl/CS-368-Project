@@ -37,6 +37,9 @@
     <Filter Include="Source Files\stages">
       <UniqueIdentifier>{557c2a6b-d0aa-4d6e-bf58-3646307d9510}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\enemies">
+      <UniqueIdentifier>{f8786cb4-64b6-4141-b653-d7b75fdcd9ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="Stage1.h">
       <Filter>Header Files\stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -60,11 +60,6 @@ ScreenGame::ScreenGame(sf::RenderWindow& window)
 
 void ScreenGame::run() {
 
-	// game over!
-	if (currentStage->lives <= 0) {
-		// do stuff
-	}
-
 	// update money and lives
 	moneyTxt.setString("Money: " + std::to_string(currentStage->money));
 	livesTxt.setString("Lives: " + std::to_string(currentStage->lives));

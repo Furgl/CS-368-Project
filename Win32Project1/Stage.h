@@ -2,8 +2,9 @@
 
 #include <vector>
 #include <random>
-#include <cassert>
+#include <memory>
 #include "Tile.h"
+#include "Enemy.h"
 
 class Stage {
 
@@ -33,8 +34,19 @@ protected:
 	std::vector<std::vector<int>> map;
 	// Tile objects corresponding to [row][col] of game board
 	std::vector<std::vector<Tile>> tiles;
+	// Row and column where enemies will spawn at, marked as a 2 on the map
+	sf::Vector2f spawnPos;
+	// 
+	int spawningSpeed;
+	// Enemies that have not yet spawned, 0 for none
+	std::vector<int> futureEnemies;
+	// Enemies that are currently on the board
+	std::vector<std::shared_ptr<Enemy>> aliveEnemies;
 
 public:
+
+	int money = 1000;
+	int lives = 50;
 
 	Stage(sf::RenderWindow& window, std::vector <int> map) : window(window) {
 		// initialize textures
@@ -63,40 +75,41 @@ public:
 		for (int i = 0; i < map.size(); ++i) {
 			int row = i / 12;
 			int col = i % 12;
-			tiles[row].push_back(Tile(window, getTexture(row, col), getDrawingPos(row, col)));
+			if (this->map[row][col] == 2) {
+				spawnPos.x = row;
+				spawnPos.y = col;
+			}
+			tiles[row].push_back(Tile(window, getTexture(row, col), Enemy::getDrawingPos(sf::Vector2f(row, col))));
 		}
 	}
 
-	// get actual position on screen from a game tile's row and col
-	sf::Vector2f getDrawingPos(int row, int col) {
-		return sf::Vector2f(col * Tile::SIZE, row * Tile::SIZE + 100);
-	}
-
-	// get next path location for enemy to move to based on map values
-	sf::Vector2f getNextPath(int row, int col) {
-		std::vector<sf::Vector2f> paths;
-
-		int maxRows = (int)map.size() - 1;
-		int maxCols = (int)map[row].size() - 1;
-
-		if (col == 0 || (col > 0 && map[row][col - 1] > map[row][col])) // left
-			paths.push_back(sf::Vector2f(row, col - 1));
-		if (row == 0 || (row > 0 && map[row - 1][col] > map[row][col])) // top
-			paths.push_back(sf::Vector2f(row - 1, col));
-		if (row == maxRows || (row < maxRows && map[row][col + 1] > map[row][col])) // right
-			paths.push_back(sf::Vector2f(row, col + 1));
-		if (col == maxCols || (col < maxCols && map[row + 1][col] > map[row][col])) // bottom
-			paths.push_back(sf::Vector2f(row + 1, col));
-
-		assert(paths.size() > 0); // safety check - should never happen if map is set up correctly
-
-		return paths[std::rand() % paths.size()];
-	}
-
 	void draw() {
+		// spawn in an enemy for testing
+		if (aliveEnemies.empty())
+			aliveEnemies.push_back(std::make_unique<Enemy>(
+				window, map, spawnPos, 1));
+
+		// draw tiles
 		for (std::vector<Tile> tileVec : tiles)
 			for (Tile tile : tileVec)
 				tile.draw();
+
+		// remove dead enemies and deal with them appropriately
+		aliveEnemies.erase(std::remove_if(aliveEnemies.begin(), aliveEnemies.end(),
+			[this](std::shared_ptr<Enemy> enemy) { 
+			if (enemy->isDead) {
+				if (enemy->reachedEnd)
+					--lives;
+				else
+					money += enemy->value;
+				return true;
+			}
+			return false;
+		}), aliveEnemies.end());
+
+		// draw enemies that are alive
+		for (std::shared_ptr<Enemy> enemy : aliveEnemies) 
+			enemy->draw();
 	}
 
 	// get texture of tile in map based on neighboring numbers in map

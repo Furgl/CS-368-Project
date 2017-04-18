@@ -17,4 +17,9 @@ Stage1::Stage1(sf::RenderWindow& window) : Stage(window,
 	0,  1, 31, 30, 29, 28, 27,  1,  1,  1, 21,  0,
 	0,  1, 32,  0,  0,  1, 26, 25, 24, 23, 22,  0,
 	0,  1, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0 }
-) {}
+) {
+	spawningSpeed = 10; // spawningSpeed and futureEnemies are not implemented yet
+	futureEnemies = {
+	0,1,0,0,0,0,0,0,0,0,
+	1,1,1,1,1,1,1,1,1,1};
+}

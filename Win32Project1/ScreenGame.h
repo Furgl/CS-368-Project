@@ -12,8 +12,6 @@ private:
 	sf::RectangleShape sideBar;
 	sf::Text moneyTxt;
 	sf::Text livesTxt;
-	int money = 1000;
-	int lives = 50;
 	std::vector<sf::RectangleShape> lines;
 	Stage* currentStage;
 
