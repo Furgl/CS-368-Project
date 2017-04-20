@@ -34,7 +34,7 @@ ScreenTitle::ScreenTitle(sf::RenderWindow& window)
 		[](sf::RenderWindow & window) {main::currentScreen = 1;}));
 }
 
-void ScreenTitle::run() {
+void ScreenTitle::draw() {
 	sf::Uint8 fade = abs(cos(main::counter * (double) 0.0002) * 80) + 130;
 	background.setColor(sf::Color(fade, fade, fade));
 

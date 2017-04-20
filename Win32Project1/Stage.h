@@ -5,6 +5,8 @@
 #include <memory>
 #include "Tile.h"
 #include "Enemy.h"
+#include "main.h"
+#include <ctime>
 
 class Stage {
 
@@ -26,6 +28,18 @@ protected:
 	sf::Texture grass_bottomAndRight;
 	sf::Texture grass_bottomAndLeft;
 
+	// decoration textures
+	sf::Texture bush_1;
+	sf::Texture bush_2;
+	sf::Texture bush_3;
+	sf::Texture bush_4;
+	sf::Texture rock_1;
+	sf::Texture rock_2;
+	sf::Texture rock_3;
+	sf::Texture shadow_1;
+	sf::Texture shadow_2;
+	sf::Texture shadow_3;
+
 	sf::RenderWindow& window;
 	// 0 represents terrain, while numbers > 0 represent the path
 	// 1 is a normal path block
@@ -34,21 +48,35 @@ protected:
 	std::vector<std::vector<int>> map;
 	// Tile objects corresponding to [row][col] of game board
 	std::vector<std::vector<Tile>> tiles;
+	// Lines outline the game board tiles
+	std::vector<sf::RectangleShape> lines;
+	// Decorations for the map (bushes, rocks, shadows)
+	std::vector<sf::Sprite> decorations;
 	// Row and column where enemies will spawn at, marked as a 2 on the map
 	sf::Vector2f spawnPos;
-	// 
-	int spawningSpeed;
-	// Enemies that have not yet spawned, 0 for none
-	std::vector<int> futureEnemies;
-	// Enemies that are currently on the board
-	std::vector<std::shared_ptr<Enemy>> aliveEnemies;
+	// Used for timing between enemy spawns
+	std::clock_t time;
 
 public:
 
-	int money = 1000;
-	int lives = 50;
+	// Time between each enemy spawning in each wave in seconds
+	static const int TIME_BETWEEN_SPAWNS = 3;
+	// Number of waves on this stage
+	int numWaves;
+	// Index for moving through waves
+	int nextEnemy;
+	// Enemies that have not yet spawned, 0 for none
+	std::vector<int> waves;
+	// Enemies that are currently on the board
+	std::vector<std::shared_ptr<Enemy>> aliveEnemies;
+
+	int money = 100;
+	int lives = 10;
 
 	Stage(sf::RenderWindow& window, std::vector <int> map) : window(window) {
+		nextEnemy = 1;
+		time = std::clock();
+
 		// initialize textures
 		grass_all.loadFromFile("textures/grass_all.png");
 		grass_none.loadFromFile("textures/grass_none.png");
@@ -64,6 +92,40 @@ public:
 		grass_topAndRight.loadFromFile("textures/grass_topAndRight.png");
 		grass_bottomAndLeft.loadFromFile("textures/grass_bottomAndLeft.png");
 		grass_bottomAndRight.loadFromFile("textures/grass_bottomAndRight.png");
+		bush_1.loadFromFile("textures/bush_1.png");
+		bush_2.loadFromFile("textures/bush_2.png");
+		bush_3.loadFromFile("textures/bush_3.png");
+		bush_4.loadFromFile("textures/bush_4.png");
+		rock_1.loadFromFile("textures/rock_1.png");
+		rock_2.loadFromFile("textures/rock_2.png");
+		rock_3.loadFromFile("textures/rock_3.png");
+		shadow_1.loadFromFile("textures/shadow_1.png");
+		shadow_2.loadFromFile("textures/shadow_2.png");
+		shadow_3.loadFromFile("textures/shadow_3.png");
+		grass_all.setSmooth(true);
+		grass_none.setSmooth(true);
+		grass_topRight.setSmooth(true);
+		grass_topLeft.setSmooth(true);
+		grass_bottomLeft.setSmooth(true);
+		grass_bottomRight.setSmooth(true);
+		grass_top.setSmooth(true);
+		grass_left.setSmooth(true);
+		grass_right.setSmooth(true);
+		grass_bottom.setSmooth(true);
+		grass_topAndLeft.setSmooth(true);
+		grass_topAndRight.setSmooth(true);
+		grass_bottomAndLeft.setSmooth(true);
+		grass_bottomAndRight.setSmooth(true);
+		bush_1.setSmooth(true);
+		bush_2.setSmooth(true);
+		bush_3.setSmooth(true);
+		bush_4.setSmooth(true);
+		rock_1.setSmooth(true);
+		rock_2.setSmooth(true);
+		rock_3.setSmooth(true);
+		shadow_1.setSmooth(true);
+		shadow_2.setSmooth(true);
+		shadow_3.setSmooth(true);
 
 		// put vector<int> map into vector<vector<int>> map
 		this->map = std::vector<std::vector<int>>(10, std::vector<int>(12, 0));
@@ -81,18 +143,63 @@ public:
 			}
 			tiles[row].push_back(Tile(window, getTexture(row, col), Enemy::getDrawingPos(sf::Vector2f(row, col))));
 		}
+
+		// create game board lines
+		float space = Tile::SIZE;
+		for (int row = 0; row <= (float)600 / space; ++row) {
+			sf::RectangleShape line(sf::Vector2f(2, 500));
+			line.setPosition(row*space, 100);
+			lines.push_back(line);
+		}
+		for (int col = 0; col <= (float)500 / space; ++col) {
+			sf::RectangleShape line(sf::Vector2f(600, 2));
+			line.setPosition(0, col*space + 98);
+			lines.push_back(line);
+		}
+	}
+
+	int getCurrentWave() {
+		return std::floor((nextEnemy - 1) / (waves.size() / numWaves));
+	}
+
+	int getTimeToNextWave() {
+		int enemiesPerWave = waves.size() / numWaves;
+		int currentEnemyInWave = (nextEnemy - 1) % enemiesPerWave;
+		return (enemiesPerWave - currentEnemyInWave - 1) * TIME_BETWEEN_SPAWNS + getTimeToNextEnemy();
+	}
+
+	int getTimeToNextEnemy() {
+		double elapsedTime = (std::clock() - time) / CLOCKS_PER_SEC;
+		return std::max(TIME_BETWEEN_SPAWNS - elapsedTime, 0.0);
 	}
 
 	void draw() {
-		// spawn in an enemy for testing
-		if (aliveEnemies.empty())
-			aliveEnemies.push_back(std::make_unique<Enemy>(
-				window, map, spawnPos, 1));
+		// spawn the next enemy if TIME_BETWEEN_SPAWNS seconds have passed
+		if (nextEnemy < waves.size()) { 
+			if (getTimeToNextEnemy() == 0) {
+				if (waves[nextEnemy] > 0)
+					aliveEnemies.push_back(std::make_unique<Enemy>(
+						window, map, spawnPos, waves[nextEnemy]));
+				nextEnemy++;
+				time = std::clock();
+			}
+		}
 
 		// draw tiles
 		for (std::vector<Tile> tileVec : tiles)
 			for (Tile tile : tileVec)
 				tile.draw();
+
+		// draw lines
+		sf::Uint8 fade = abs(cos(main::counter * (double) 0.0004) * 80);
+		for (sf::RectangleShape line : lines) {
+			line.setFillColor(sf::Color(100, 150, 210, 20 + fade));
+			window.draw(line);
+		}
+
+		// draw decorations
+		for (sf::Sprite sprite : decorations)
+			window.draw(sprite);
 
 		// remove dead enemies and deal with them appropriately
 		aliveEnemies.erase(std::remove_if(aliveEnemies.begin(), aliveEnemies.end(),

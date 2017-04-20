@@ -9,8 +9,14 @@
 class Enemy {
 
 private:
-	
+
+	// enemy textures
 	sf::Texture enemy1;
+	sf::Texture enemy2;
+	sf::Texture enemy3;
+	sf::Texture enemy4;
+	sf::Texture enemy5;
+	sf::Texture enemy6;
 
 	sf::RenderWindow& window;
 	std::vector<std::vector<int>>& map;
@@ -18,10 +24,12 @@ private:
 	sf::Sprite sprite;
 	sf::Vector2f nextPos;
 	sf::Vector2f finalPos;
+	// random offset to make them look less uniform
+	sf::Vector2f offset;
 	int speed;
-	double health;
+	double maxHealth;
+	double currentHealth;
 	HealthBar healthBar = HealthBar(window, sprite.getPosition().x, sprite.getPosition().y);
-
 
 public:
 
@@ -32,30 +40,63 @@ public:
 	// how much money the player is given for killing this
 	int value;
 
-	//Not exactly sure how we wanna do hit mechanics but for now if hit set this flag to true to update health;
-	bool wasHit;
-
-
 	Enemy(sf::RenderWindow& window, std::vector<std::vector<int>>& map,
-		sf::Vector2f startPos, int type)	
+		sf::Vector2f startPos, int type)
 		: window(window), map(map) {
 		isDead = false;
 		reachedEnd = false;
-		wasHit = false;
+		offset = sf::Vector2f(std::rand() % 40 - 20, std::rand() % 40 - 20);
 		sprite.setScale(sf::Vector2f(Tile::SIZE / 64.0f, Tile::SIZE / 64.0f));
 		sf::Vector2f pos = getDrawingPos(startPos);
 		sprite.setPosition(pos);
-		nextPos = getNextPath(startPos);
+		nextPos = pos;
 
 		// initialize enemy according to type
 		if (type == 1) {
 			enemy1.loadFromFile("textures/enemy_1.png");
 			sprite.setTexture(enemy1);
-			sprite.setOrigin(enemy1.getSize().x/2, enemy1.getSize().y/2);
-			speed = 30;
-			health = 10;
+			speed = 20;
+			maxHealth = 10;
 			value = 1;
 		}
+		else if (type == 2) {
+			enemy2.loadFromFile("textures/enemy_2.png");
+			sprite.setTexture(enemy2);
+			speed = 10;
+			maxHealth = 20;
+			value = 2;
+		}
+		else if (type == 3) {
+			enemy3.loadFromFile("textures/enemy_3.png");
+			sprite.setTexture(enemy3);
+			speed = 10;
+			maxHealth = 30;
+			value = 3;
+		}
+		else if (type == 4) {
+			enemy4.loadFromFile("textures/enemy_4.png");
+			sprite.setTexture(enemy4);
+			speed = 10;
+			maxHealth = 40;
+			value = 4;
+		}
+		else if (type == 5) {
+			enemy5.loadFromFile("textures/enemy_5.png");
+			sprite.setTexture(enemy5);
+			speed = 5;
+			maxHealth = 50;
+			value = 5;
+		}
+		else if (type == 6) {
+			enemy6.loadFromFile("textures/enemy_6.png");
+			sprite.setTexture(enemy6);
+			speed = 5;
+			maxHealth = 60;
+			value = 6;
+		}
+		
+		sprite.setOrigin(32, 32);
+		currentHealth = maxHealth;
 	}
 
 	void draw() {
@@ -92,35 +133,27 @@ public:
 				sprite.setRotation(90);  // down
 		}
 
-		//update healthBar pos with that of sprite
-		healthBar.setPos(sprite.getPosition().x, sprite.getPosition().y);
-		
+		// update healthBar pos with that of sprite
+		healthBar.setPos(sprite.getPosition().x + offset.x, sprite.getPosition().y + offset.y);
 
-		//SIMPLY HERE TO TEST IF THE HIT FUNCTION IN HEALTH BAR IS WORKING
-		//Press and hold Spacebar to see health decrease
-			sf::Event event;
-			int dead = 0;
-
-			while (window.pollEvent(event)) {
-
-				if (event.type == sf::Event::KeyPressed) {
-
-					if (event.key.code == sf::Keyboard::Space) {
-						dead = healthBar.hit(1, health);
-						health -= 1;
-					}
-					if (dead == 1)
-						isDead = true;
-				}
-			}
-		
-
+		// apply random offset for drawing and remove afterwards
+		sprite.setPosition(sprite.getPosition().x + offset.x, sprite.getPosition().y + offset.y);
 		window.draw(sprite);
-		if (dead != 1)
+		sprite.setPosition(sprite.getPosition().x - offset.x, sprite.getPosition().y - offset.y);
+
+		// draw healthbar only if currentHealth is below maxHealth and enemy is still alive
+		if (currentHealth < maxHealth && !isDead)
 			healthBar.draw();
 	}
 
-
+	// attack the enemy - reduce health, mark dead if needed, and update healthbar
+	void attack(double damage) {
+		currentHealth -= damage;
+		if (currentHealth <= 0)
+			isDead = true;
+		else
+			healthBar.update(currentHealth, maxHealth);
+	}
 
 	// get actual position on screen from a game tile's row and col
 	static sf::Vector2f getDrawingPos(sf::Vector2f boardPos) {

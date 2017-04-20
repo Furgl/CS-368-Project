@@ -2,44 +2,25 @@
 
 
 HealthBar::HealthBar(sf::RenderWindow &window, int xPos, int yPos) 
-			:  window(window),rectangle() {
-
+			:  window(window) {
 	rectangle.setSize(sf::Vector2f(25, 5));
 	rectangle.setFillColor(sf::Color::Green);
 	rectangle.setOutlineColor(sf::Color::Black);
 	rectangle.setOutlineThickness(2);
-	rectangle.setPosition(xPos- 12, yPos- 20);
-
+	setPos(xPos, yPos);
 }
 
 void HealthBar::draw() {
 	window.draw(rectangle);
 }
 
-//updates teh position to move with sprite
+//updates the position to move with sprite
 void HealthBar::setPos(int x, int y) {
 	rectangle.setPosition(x - 12, y - 20);
 }
 
-//updates the health bar if hit, may need to add another parameter for the amount of damage hit did
-int HealthBar::hit(double damage, double health) {
-
-	//if the damage will kill the enemy
-	if (damage > health)
-		return 1;
-
-	//Otherwise update the health bar
-	else {
-
-		//expression to find how much health bar should change
-		double percentLost = damage / health;
-		double barChange = percentLost * rectangle.getSize().x;
-
-		rectangle.setSize(sf::Vector2f(rectangle.getSize().x - barChange, rectangle.getSize().y));
-		return 0;
-
-	}
-
-	//shouldn't ever get here
-	return 0;
+//updates the health bar if hit
+void HealthBar::update(double currentHealth, double maxHealth) {
+	double percentage = currentHealth / maxHealth;
+	rectangle.setSize(sf::Vector2f(25.0 * percentage, rectangle.getSize().y));
 }

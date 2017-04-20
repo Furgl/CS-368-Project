@@ -18,8 +18,56 @@ Stage1::Stage1(sf::RenderWindow& window) : Stage(window,
 	0,  1, 32,  0,  0,  1, 26, 25, 24, 23, 22,  0,
 	0,  1, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0 }
 ) {
-	spawningSpeed = 10; // spawningSpeed and futureEnemies are not implemented yet
-	futureEnemies = {
-	0,1,0,0,0,0,0,0,0,0,
-	1,1,1,1,1,1,1,1,1,1};
+	numWaves = 6;
+	// typically should have the last few enemies in a wave be 0
+	// so that there's time to prepare before the next wave starts
+	// first wave should also be all 0 so player can prepare
+	// 1-6 are types of enemies that will spawn, 0 is nothing
+	// each row represents a wave
+	waves = {
+		0,0,0,0,0,0,0,0,0,0,
+		1,1,1,2,1,2,0,0,0,0,
+		3,1,1,2,1,3,0,0,0,0, 
+		2,3,2,4,0,1,0,0,0,0,
+		5,0,0,5,0,2,0,0,0,0,
+		5,6,0,1,1,4,0,0,0,0
+	};
+
+	// add decorations
+	sf::Sprite sprite;
+
+	sprite.setTexture(bush_1);
+	sprite.setPosition(sf::Vector2f(20, 376));
+	sprite.setRotation(30);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(bush_3);
+	sprite.setPosition(sf::Vector2f(300, 100));
+	sprite.setRotation(30);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(bush_4);
+	sprite.setPosition(sf::Vector2f(360, 364));
+	sprite.setRotation(12);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(rock_1);
+	sprite.setPosition(sf::Vector2f(520, 310));
+	sprite.setRotation(0);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(shadow_1);
+	sprite.setPosition(sf::Vector2f(62, 223));
+	sprite.setRotation(10);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(shadow_2);
+	sprite.setPosition(sf::Vector2f(155, 505));
+	sprite.setRotation(5);
+	decorations.push_back(sprite);
+
+	sprite.setTexture(shadow_3);
+	sprite.setPosition(sf::Vector2f(289, 483));
+	sprite.setRotation(5);
+	decorations.push_back(sprite);
 }

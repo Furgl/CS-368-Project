@@ -6,9 +6,6 @@
 #include "ScreenGame.h"
 #include "ScreenTitle.h"
 
-// Old code can be seen in github commits, so we don't have to worry about saving it for
-//      if we ever need to reference it again.
-
 // 0 is title, 1 is game
 int main::currentScreen = 0;
 std::vector<Screen*> main::screens;
@@ -38,6 +35,12 @@ int WinMain() {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 
+			// SIMPLY HERE TO TEST IF THE HIT FUNCTION IN HEALTH BAR IS WORKING
+			// Press and hold Spacebar to see health decrease
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+				main::screens[main::currentScreen]->spacebar();
+
+
 			// mouse moved - update buttons
 			if (event.type == sf::Event::MouseMoved) {
 				for (Button* button : main::screens[main::currentScreen]->buttons)
@@ -62,7 +65,7 @@ int WinMain() {
 		main::counter++;
 
 		// draw buttons and call Screen#run()
-		main::screens[main::currentScreen]->run();
+		main::screens[main::currentScreen]->draw();
 		for (Button* button : main::screens[main::currentScreen]->buttons)
 			button->draw();
 

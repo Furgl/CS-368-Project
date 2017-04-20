@@ -12,12 +12,14 @@ private:
 	sf::RectangleShape sideBar;
 	sf::Text moneyTxt;
 	sf::Text livesTxt;
-	std::vector<sf::RectangleShape> lines;
+	sf::Text currentWaveTxt;
+	sf::Text timeToNextWaveTxt;
 	Stage* currentStage;
 
 public:
 
 	ScreenGame(sf::RenderWindow & window);
-	void Screen::run() override;
+	void Screen::draw() override;
+	void spacebar() override;
 
 };

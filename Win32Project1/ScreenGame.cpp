@@ -2,10 +2,10 @@
 #include "Screen.h"
 #include "SFML\Graphics.hpp"
 #include "Button.h"
-#include "main.h"
 #include "Tile.h"
-#include "Stage1.h"
 #include <sstream>
+#include "main.h"
+#include "Stage1.h"
 
 ScreenGame::ScreenGame(sf::RenderWindow& window)
 	: Screen(window) {
@@ -26,57 +26,64 @@ ScreenGame::ScreenGame(sf::RenderWindow& window)
 	// load font
 	font.loadFromFile("fonts/airstrike.ttf");
 
-	// create money & lives text
+	// create texts
 	moneyTxt.setFont(font);
 	moneyTxt.setCharacterSize(30);
 	moneyTxt.setFillColor(sf::Color::White);
-	moneyTxt.setPosition(sf::Vector2f(15, 10));
+	moneyTxt.setPosition(sf::Vector2f(40, 10));
 
 	livesTxt.setFont(font);
 	livesTxt.setCharacterSize(30);
 	livesTxt.setFillColor(sf::Color::White);
-	livesTxt.setPosition(sf::Vector2f(15, 50));
+	livesTxt.setPosition(sf::Vector2f(50, 50));
+
+	currentWaveTxt.setFont(font);
+	currentWaveTxt.setCharacterSize(30);
+	currentWaveTxt.setFillColor(sf::Color::White);
+	currentWaveTxt.setPosition(sf::Vector2f(350, 10));
+
+	timeToNextWaveTxt.setFont(font);
+	timeToNextWaveTxt.setCharacterSize(30);
+	timeToNextWaveTxt.setFillColor(sf::Color::White);
+	timeToNextWaveTxt.setPosition(sf::Vector2f(330, 50));
 
 	// create Save & Quit button
 	buttons.push_back(new Button(window, "Save & Quit", font, 609, 550, 28, 3,
 		[](sf::RenderWindow & window) {main::currentScreen = 0; }));
 
-	// create game board lines
-	float space = Tile::SIZE;
-	for (int row = 0; row <= (float) 600 / space; ++row) {
-		sf::RectangleShape line(sf::Vector2f(2, 500));
-		line.setPosition(row*space, 100);
-		lines.push_back(line);
-	}
-	for (int col = 0; col <= (float) 500 / space; ++col) {
-		sf::RectangleShape line(sf::Vector2f(600, 2));
-		line.setPosition(0, col*space + 98);
-		lines.push_back(line);
-	}
-
 	// set current stage
 	currentStage = new Stage1(window);
 }
 
-void ScreenGame::run() {
+// temporary function - will be removed when we have towers
+void ScreenGame::spacebar() {
+	if (!currentStage->aliveEnemies.empty())
+		currentStage->aliveEnemies[0]->attack(1);
+}
+
+void ScreenGame::draw() {
 
 	// game over!
 	if (currentStage->lives <= 0) {
 		// do stuff
 	}
+	// all enemies have been spawned and defeated
+	else if (currentStage->nextEnemy >= currentStage->waves.size() && currentStage->aliveEnemies.empty()) {
+		// do stuff
+	}
 
-	// update money and lives
+	// update texts
 	moneyTxt.setString("Money: " + std::to_string(currentStage->money));
 	livesTxt.setString("Lives: " + std::to_string(currentStage->lives));
+	currentWaveTxt.setString("Wave: " + std::to_string(currentStage->getCurrentWave()) + " / " + std::to_string(currentStage->numWaves - 1));
+	int timeToNextWave = currentStage->getTimeToNextWave();
+	timeToNextWaveTxt.setString("Next Wave: " + (timeToNextWave == 0 ? "-" : std::to_string(timeToNextWave)));
 
 	currentStage->draw();
-	sf::Uint8 fade = abs(cos(main::counter * (double) 0.0004) * 80);
-	for (sf::RectangleShape line : lines) {
-		line.setFillColor(sf::Color(100, 150, 210, 20 + fade));
-		window.draw(line);
-	}
 	window.draw(topBar);
 	window.draw(sideBar);
 	window.draw(moneyTxt);
 	window.draw(livesTxt);
+	window.draw(currentWaveTxt);
+	window.draw(timeToNextWaveTxt);
 }

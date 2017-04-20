@@ -11,9 +11,10 @@ protected:
 	sf::Font font;
 
 public:
+
 	std::vector<Button*> buttons;
 
 	Screen(sf::RenderWindow & window) : window(window) {}
-
-	virtual void run() = 0;
+	virtual void draw() = 0;
+	virtual void spacebar() = 0;
 };

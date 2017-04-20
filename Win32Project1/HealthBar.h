@@ -18,7 +18,7 @@ public:
 	// Draw the button
 	virtual void draw();
 
-	int hit(double damage, double health);
+	void HealthBar::update(double currentHealth, double maxHealth);
 
 	void setPos(int x, int y);
 
