@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "SFML\Graphics.hpp"
 #include "Stage.h"
+#include "ButtonSell.h"
 
 class ScreenGame : public Screen {
 
@@ -14,12 +15,15 @@ private:
 	sf::Text livesTxt;
 	sf::Text currentWaveTxt;
 	sf::Text timeToNextWaveTxt;
-	Stage* currentStage;
+	sf::Text towersTxt;
+	Stage* currentStage = nullptr;
+	ButtonSell* sellButton;
 
 public:
 
 	ScreenGame(sf::RenderWindow & window);
-	void Screen::draw() override;
-	void spacebar() override;
+	void startStage(int stage);
+	void draw() override;
+	void click(float x, float y) override;
 
 };

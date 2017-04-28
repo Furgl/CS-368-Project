@@ -15,6 +15,5 @@ public:
 
 	ScreenTitle(sf::RenderWindow & window);
 	void Screen::draw() override;
-	void spacebar() override {}
 
 };

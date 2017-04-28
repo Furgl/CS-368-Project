@@ -4,9 +4,10 @@
 #include <math.h> 
 #include <time.h>
 #include "ScreenGame.h"
+#include "ScreenGameOver.h"
 #include "ScreenTitle.h"
 
-// 0 is title, 1 is game
+// 0 is title, 1 is game, 2 is game over
 int main::currentScreen = 0;
 std::vector<Screen*> main::screens;
 double main::counter = 0;
@@ -24,6 +25,8 @@ int WinMain() {
 	main::screens.push_back(&title);
 	ScreenGame game(window);
 	main::screens.push_back(&game);
+	ScreenGameOver gameOver(window);
+	main::screens.push_back(&gameOver);
 
 	// run program as long as window is open - handles all screen buttons and calls Screen#run()
 	while (window.isOpen()) {
@@ -34,12 +37,6 @@ int WinMain() {
 		// process events
 		sf::Event event;
 		while (window.pollEvent(event)) {
-
-			// SIMPLY HERE TO TEST IF THE HIT FUNCTION IN HEALTH BAR IS WORKING
-			// Press and hold Spacebar to see health decrease
-			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
-				main::screens[main::currentScreen]->spacebar();
-
 
 			// mouse moved - update buttons
 			if (event.type == sf::Event::MouseMoved) {
@@ -53,6 +50,7 @@ int WinMain() {
 				for (Button* button : main::screens[main::currentScreen]->buttons)
 					if (button->isMouseOver(event.mouseButton.x, event.mouseButton.y))
 						button->onClick();
+				main::screens[main::currentScreen]->click(event.mouseButton.x, event.mouseButton.y);
 			}
 
 			// close window when requested

@@ -13,6 +13,8 @@ protected:
 
 public:
 
+	Button(sf::RenderWindow & window);
+
 	Button(sf::RenderWindow & window, std::string text, sf::Font & font, int x, int y, int textSize, int outlineSize);
 
 	Button(sf::RenderWindow & window, std::string text, sf::Font & font, int x, int y, int textSize, int outlineSize, 

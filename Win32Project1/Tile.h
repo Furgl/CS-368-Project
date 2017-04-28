@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SFML\Graphics.hpp"
+#include "Tower.h"
 
 class Tile {
 
@@ -8,10 +9,11 @@ private:
 
 	sf::RenderWindow& window;
 	sf::Sprite sprite;
-	// Tower tower;
 
 public:
 
+	sf::Vector2f pos;
+	Tower* tower;
 	// size of all (square) tiles
 	const static int SIZE = 50;
 

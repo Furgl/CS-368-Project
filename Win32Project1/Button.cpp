@@ -1,8 +1,12 @@
 #include "Button.h"
 
+Button::Button(sf::RenderWindow & window): window(window) {
+
+}
+
 Button::Button(sf::RenderWindow& window, std::string text, sf::Font& font,
 	int x, int y, int textSize, int outlineSize)
-: window(window), text(text, font), rectangle() {
+: window(window), text(text, font) {
 	this->text.setCharacterSize(textSize);
 	this->text.setPosition(x, y);
 	this->text.setFillColor(sf::Color(20, 20, 30));

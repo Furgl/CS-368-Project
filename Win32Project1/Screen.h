@@ -16,5 +16,6 @@ public:
 
 	Screen(sf::RenderWindow & window) : window(window) {}
 	virtual void draw() = 0;
-	virtual void spacebar() = 0;
+	virtual void click(float x, float y) {}
+
 };

@@ -1,4 +1,5 @@
 #include "ScreenTitle.h"
+#include "ScreenGame.h"
 #include "Screen.h"
 #include "SFML\Graphics.hpp"
 #include "Button.h"
@@ -28,10 +29,10 @@ ScreenTitle::ScreenTitle(sf::RenderWindow& window)
 	title.setOutlineColor(sf::Color(40, 100, 200));
 
 	// create vector of current buttons
-	buttons.push_back(new Button(window, "Exit", font, 480, 342, 50, 5, 
-		[](sf::RenderWindow & window) {window.close();}));
+	buttons.push_back(new Button(window, "Exit", font, 480, 342, 50, 5,
+		[](sf::RenderWindow & window) {window.close(); }));
 	buttons.push_back(new Button(window, "Play", font, 190, 342, 50, 5,
-		[](sf::RenderWindow & window) {main::currentScreen = 1;}));
+		[](sf::RenderWindow & window) {main::currentScreen = 1; }));
 }
 
 void ScreenTitle::draw() {

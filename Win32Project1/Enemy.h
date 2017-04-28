@@ -1,6 +1,5 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include "Tile.h"
 #include "HealthBar.h"
 #include <cassert>
 #include <memory>
@@ -21,11 +20,7 @@ private:
 	sf::RenderWindow& window;
 	std::vector<std::vector<int>>& map;
 
-	sf::Sprite sprite;
-	sf::Vector2f nextPos;
 	sf::Vector2f finalPos;
-	// random offset to make them look less uniform
-	sf::Vector2f offset;
 	int speed;
 	double maxHealth;
 	double currentHealth;
@@ -33,6 +28,10 @@ private:
 
 public:
 
+	sf::Sprite sprite;
+	sf::Vector2f nextPos;
+	// random offset to make them look less uniform
+	sf::Vector2f offset;
 	// true if killed by player or reached end of path
 	bool isDead;
 	// true if enemy reached end of the path and lives need to be updated
@@ -46,52 +45,53 @@ public:
 		isDead = false;
 		reachedEnd = false;
 		offset = sf::Vector2f(std::rand() % 40 - 20, std::rand() % 40 - 20);
-		sprite.setScale(sf::Vector2f(Tile::SIZE / 64.0f, Tile::SIZE / 64.0f));
+		sprite.setScale(sf::Vector2f(50 / 64.0f, 50 / 64.0f));
 		sf::Vector2f pos = getDrawingPos(startPos);
 		sprite.setPosition(pos);
 		nextPos = pos;
 
+		int speedModifier = 2; // for easy testing
 		// initialize enemy according to type
 		if (type == 1) {
 			enemy1.loadFromFile("textures/enemy_1.png");
 			sprite.setTexture(enemy1);
-			speed = 20;
+			speed = 10 * speedModifier;
 			maxHealth = 10;
 			value = 1;
 		}
 		else if (type == 2) {
 			enemy2.loadFromFile("textures/enemy_2.png");
 			sprite.setTexture(enemy2);
-			speed = 10;
-			maxHealth = 20;
+			speed = 9 * speedModifier;
+			maxHealth = 30;
 			value = 2;
 		}
 		else if (type == 3) {
 			enemy3.loadFromFile("textures/enemy_3.png");
 			sprite.setTexture(enemy3);
-			speed = 10;
-			maxHealth = 30;
+			speed = 8 * speedModifier;
+			maxHealth = 50;
 			value = 3;
 		}
 		else if (type == 4) {
 			enemy4.loadFromFile("textures/enemy_4.png");
 			sprite.setTexture(enemy4);
-			speed = 10;
-			maxHealth = 40;
+			speed = 7 * speedModifier;
+			maxHealth = 70;
 			value = 4;
 		}
 		else if (type == 5) {
 			enemy5.loadFromFile("textures/enemy_5.png");
 			sprite.setTexture(enemy5);
-			speed = 5;
-			maxHealth = 50;
+			speed = 5 * speedModifier;
+			maxHealth = 90;
 			value = 5;
 		}
 		else if (type == 6) {
 			enemy6.loadFromFile("textures/enemy_6.png");
 			sprite.setTexture(enemy6);
-			speed = 5;
-			maxHealth = 60;
+			speed = 5 * speedModifier;
+			maxHealth = 110;
 			value = 6;
 		}
 		
@@ -157,14 +157,12 @@ public:
 
 	// get actual position on screen from a game tile's row and col
 	static sf::Vector2f getDrawingPos(sf::Vector2f boardPos) {
-		return sf::Vector2f(boardPos.y * Tile::SIZE, boardPos.x * Tile::SIZE + 100);
+		return sf::Vector2f(boardPos.y * 50, boardPos.x * 50 + 100);
 	}
-
-	// not sure why the x and y are flipped in these two methods... but it works
 
 	// get a game tile's row and col from actual position on screen
 	static sf::Vector2f getBoardPos(sf::Vector2f drawingPos) {
-		return sf::Vector2f((drawingPos.y - 100) / Tile::SIZE, drawingPos.x / Tile::SIZE);
+		return sf::Vector2f((drawingPos.y - 100) / 50, drawingPos.x / 50);
 	}
 
 	// get next path location for enemy to move to based on map values

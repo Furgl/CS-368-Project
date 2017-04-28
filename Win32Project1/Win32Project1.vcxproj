@@ -101,13 +101,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>SFML\include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;gdi32.lib;winmm.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,12 +152,23 @@
     <ClCompile Include="ScreenGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ScreenTitle.cpp" />
+    <ClCompile Include="ScreenGameOver.cpp" />
+    <ClCompile Include="ButtonTower.cpp" />
+    <ClCompile Include="ButtonSell.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="ButtonTower.h" />
+    <ClInclude Include="ButtonSell.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Tower.h" />
+    <ClInclude Include="ScreenGameOver.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage.h" />

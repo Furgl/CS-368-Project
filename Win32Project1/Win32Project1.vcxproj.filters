@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Enemies">
       <UniqueIdentifier>{379a1981-b26c-4330-98ac-6574b8484479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\towers">
+      <UniqueIdentifier>{2d123c14-fde6-4b59-9839-1b9aaf411d0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\towers">
+      <UniqueIdentifier>{9ee5e9b2-7467-4124-9216-ed5f430b3dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\projectiles">
+      <UniqueIdentifier>{21613857-683a-495f-bc5e-e66912822dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\projectiles">
+      <UniqueIdentifier>{5c76109c-fa88-4921-9a44-ce44bea92e35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp">
@@ -65,6 +77,24 @@
     </ClCompile>
     <ClCompile Include="HealthBar.cpp">
       <Filter>Source Files\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenGameOver.cpp">
+      <Filter>Source Files\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonTower.cpp">
+      <Filter>Source Files\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Source Files\towers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonSell.cpp">
+      <Filter>Source Files\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Source Files\stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="HealthBar.h">
       <Filter>Header Files\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenGameOver.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Header Files\towers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonTower.h">
+      <Filter>Header Files\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonSell.h">
+      <Filter>Header Files\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\projectiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

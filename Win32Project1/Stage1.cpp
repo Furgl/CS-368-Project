@@ -18,7 +18,7 @@ Stage1::Stage1(sf::RenderWindow& window) : Stage(window,
 	0,  1, 32,  0,  0,  1, 26, 25, 24, 23, 22,  0,
 	0,  1, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0 }
 ) {
-	numWaves = 6;
+	numWaves = 9;
 	// typically should have the last few enemies in a wave be 0
 	// so that there's time to prepare before the next wave starts
 	// first wave should also be all 0 so player can prepare
@@ -26,11 +26,14 @@ Stage1::Stage1(sf::RenderWindow& window) : Stage(window,
 	// each row represents a wave
 	waves = {
 		0,0,0,0,0,0,0,0,0,0,
-		1,1,1,2,1,2,0,0,0,0,
-		3,1,1,2,1,3,0,0,0,0, 
-		2,3,2,4,0,1,0,0,0,0,
-		5,0,0,5,0,2,0,0,0,0,
-		5,6,0,1,1,4,0,0,0,0
+		1,2,1,0,1,2,0,0,0,0,
+		3,1,3,2,1,4,0,0,0,0, 
+		2,3,2,0,5,4,0,0,0,0,
+		5,0,3,6,4,2,0,0,0,0,
+		5,6,5,1,0,4,0,0,0,0,
+		6,5,0,4,1,1,0,0,0,0,
+		6,6,6,4,6,5,1,0,0,0,
+		6,0,4,6,5,4,3,1,4,0
 	};
 
 	// add decorations
