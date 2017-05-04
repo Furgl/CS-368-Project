@@ -13,6 +13,7 @@ enc_temp_folder/
 
 *.vs
 
+!Project.exe
 !*.dll
 !*.lib
 !*.pdb
